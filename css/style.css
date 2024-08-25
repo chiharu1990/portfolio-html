@@ -1,3 +1,7 @@
+body {
+  font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+}
+
 .is-pc {
   display: block;
 }
@@ -345,11 +349,19 @@ header {
   border: 1px solid #333;
   padding: 12px 24px;
   transition: border-radius 0.5s;
+  color: #333;
 }
 .modal .open-btn:hover {
   border-radius: 10px;
   background: #333;
   color: #fffffe;
+}
+@media only screen and (max-width: 767px) {
+  .modal .open-btn {
+    border-radius: 10px;
+    background: #333;
+    color: #fffffe;
+  }
 }
 .modal .modal-container {
   display: none;
