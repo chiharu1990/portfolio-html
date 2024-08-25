@@ -60,7 +60,7 @@ $(function () {
   });
 });
 
-//グローバルナビゲーション
+// グローバルナビゲーション
 $(function () {
   $("#g-nav-btn").on("click", function () {
     $(this).toggleClass("active");
@@ -69,4 +69,94 @@ $(function () {
     nav.toggleClass("active");
     navBg.toggleClass("active");
   });
+});
+
+// 写真を拡大表示
+$(function () {
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    const expPhotoImageArea = $(".exp-photo-image-area");
+    const expPhotoImg = $(".exp-photo-image-area img");
+    const zoomArea = $(".exp-photo-image-zoom-area");
+    const zoomAreaImg = $(".exp-photo-image-zoom-area img");
+    const expPhotoLens = $(".exp-photo-lens");
+    const size = 200;
+    const scale = expPhotoImageArea.innerWidth() / size;
+
+    $.fn.clickToggle = function (a, b) {
+      return this.each(function () {
+        var clicked = false;
+        $(this).on("click", function () {
+          clicked = !clicked;
+          if (clicked) {
+            return a.apply(this, arguments);
+          }
+          return b.apply(this, arguments);
+        });
+      });
+    };
+
+    expPhotoImageArea.clickToggle(
+      function (e) {
+        // zoom機能ON
+        zoomArea.addClass("active");
+        expPhotoLens.addClass("active");
+        zoomAreaImg.attr("src", expPhotoImg.attr("src"));
+        zoomAreaImg.css("width", expPhotoImg.innerWidth() * scale + "px");
+        const imgMaxX = expPhotoImg.outerWidth() - size;
+        const imgMaxY = expPhotoImg.outerHeight() - size;
+        // マウスカーソルの座標を取得(windowから)
+        let offset = $(this).offset();
+        // マウスカーソルの座標を取得(要素から)
+        let mouseX = e.pageX - offset.left;
+        let mouseY = e.pageY - offset.top;
+        // lensの表示位置をマウスカーソルの真ん中にする
+        let lensX = mouseX - size / 2;
+        let lensY = mouseY - size / 2;
+        expPhotoLens.css({ left: lensX + "px", top: lensY + "px" });
+
+        expPhotoImageArea.mousemove(function (e) {
+          let offset = $(this).offset();
+          // マウスカーソルの座標を取得
+          let mouseX = e.pageX - offset.left;
+          let mouseY = e.pageY - offset.top;
+          // lensの表示位置をマウスカーソルの真ん中にする
+          let lensX = mouseX - size / 2;
+          let lensY = mouseY - size / 2;
+
+          if (lensX > imgMaxX) {
+            lensX = imgMaxX;
+          }
+          if (lensY > imgMaxY) {
+            lensY = imgMaxY;
+          }
+          if (lensX < 0) {
+            lensX = 0;
+          }
+          if (lensY < 0) {
+            lensY = 0;
+          }
+
+          expPhotoLens.css({ left: lensX + "px", top: lensY + "px" });
+          zoomAreaImg.css({
+            "margin-left": -(lensX * scale) + "px",
+            "margin-top": -(lensY * scale) + "px",
+          });
+        });
+        expPhotoImageArea.mouseleave(function () {
+          zoomArea.removeClass("active");
+          expPhotoLens.removeClass("active");
+        });
+        expPhotoImageArea.mouseenter(function () {
+          zoomArea.addClass("active");
+          expPhotoLens.addClass("active");
+        });
+      },
+      function () {
+        // zoom機能OFF
+        zoomArea.removeClass("active");
+        expPhotoLens.removeClass("active");
+        expPhotoImageArea.off("mouseleave mouseenter mousemove");
+      }
+    );
+  }
 });

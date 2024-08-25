@@ -381,3 +381,60 @@ header {
     }
   }
 }
+
+.exp-photo {
+  max-width: 1024px;
+  margin: 0 auto 80px;
+  @include sp {
+    padding: 0 16px;
+  }
+  h2 {
+    margin: 0 0 24px;
+  }
+  .title-txt {
+    margin-bottom: 16px;
+  }
+  &-container {
+    position: relative;
+
+    .exp-photo-image-area {
+      width: 48%;
+      img {
+        width: 100%;
+      }
+      .exp-photo-lens {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        z-index: 2;
+        background: #333;
+        opacity: 0.3;
+        width: 200px;
+        height: 200px;
+        display: none;
+        &.active {
+          display: block;
+        }
+      }
+      @include sp {
+        width: 100%;
+      }
+    }
+  }
+  &-image-zoom-area {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48%;
+    height: 492px;
+    overflow: hidden;
+
+    img {
+      max-width: none;
+    }
+    &.active {
+      display: block;
+    }
+  }
+}

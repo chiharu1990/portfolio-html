@@ -397,4 +397,63 @@ header {
     right: 8px;
     font-size: 24px;
   }
+}
+
+.exp-photo {
+  max-width: 1024px;
+  margin: 0 auto 80px;
+}
+@media only screen and (max-width: 767px) {
+  .exp-photo {
+    padding: 0 16px;
+  }
+}
+.exp-photo h2 {
+  margin: 0 0 24px;
+}
+.exp-photo .title-txt {
+  margin-bottom: 16px;
+}
+.exp-photo-container {
+  position: relative;
+}
+.exp-photo-container .exp-photo-image-area {
+  width: 48%;
+}
+.exp-photo-container .exp-photo-image-area img {
+  width: 100%;
+}
+.exp-photo-container .exp-photo-image-area .exp-photo-lens {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 2;
+  background: #333;
+  opacity: 0.3;
+  width: 200px;
+  height: 200px;
+  display: none;
+}
+.exp-photo-container .exp-photo-image-area .exp-photo-lens.active {
+  display: block;
+}
+@media only screen and (max-width: 767px) {
+  .exp-photo-container .exp-photo-image-area {
+    width: 100%;
+  }
+}
+.exp-photo-image-zoom-area {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48%;
+  height: 492px;
+  overflow: hidden;
+}
+.exp-photo-image-zoom-area img {
+  max-width: none;
+}
+.exp-photo-image-zoom-area.active {
+  display: block;
 }/*# sourceMappingURL=style.css.map */
